@@ -1,6 +1,6 @@
 var b=document.getElementsByClassName("no3");
 var t1=document.getElementById("t1");
-
+var isre=null;
 t1.addEventListener("click",function(){
 show('light');
 
@@ -78,16 +78,29 @@ case "6":
   break;
 
 }
-if(in1.value!=null&&in1.value!=""&&in2.value!=null&&in2.value!=""&&s21!=""&&s11!=""){
-var t =document.getElementById("t").getElementsByTagName("tbody")[0].innerHTML;
+if(in1.value!=null&&in1.value!=""&&in2.value!=null&&in2.value!=""&&s21!=""&&s11!="") {
+    if (isre !=null) {
+    isre.innerHTML="<td width=\"50px\" nowrap>" + s21 + "</td><td width=\"100px\" nowrap>" + s11 + "</td><td nowrap>" + in1.value + "</td><td nowrap>" + in2.value + "</td><td width=\"50px\" nowrap>" + sw2 + "</td><td width=\"100px\" nowrap><button onclick='re(this)'>R</button><button onclick='rm(this)'>X</button></td>";
+    isre=null;
+        s1.value = "1";
+        s2.value = "1";
+        in1.value = null;
+        in2.value = null;
+    } else {
+
+    var t = document.getElementById("t").getElementsByTagName("tbody")[0].innerHTML;
 //alert(t);
 //t
-var t2=t+"<tr><td width=\"50px\" nowrap>"+s21+"</td><td width=\"100px\" nowrap>"+s11+"</td><td nowrap>"+in1.value+"</td><td nowrap>"+in2.value+"</td><td width=\"50px\" nowrap>"+sw2+"</td><td width=\"100px\" nowrap>$100</td></tr>";
-document.getElementById("t").innerHTML=t2;
-s1.value="1";
-s2.value="1";
-in1.value=null;
-in2.value=null;
+
+    var timestamp = new Date().getTime();
+    var t2 = t + "<tr id='" + timestamp + "'><td width=\"50px\" nowrap>" + s21 + "</td><td width=\"100px\" nowrap>" + s11 + "</td><td nowrap>" + in1.value + "</td><td nowrap>" + in2.value + "</td><td width=\"50px\" nowrap>" + sw2 + "</td><td width=\"100px\" nowrap><button onclick='re(this)'>R</button><button onclick='rm(this)'>X</button></td></tr>";
+    document.getElementById("t").innerHTML = t2;
+    s1.value = "1";
+    s2.value = "1";
+    in1.value = null;
+    in2.value = null;
+
+}
 hide('light');
 }else{
 alert("请输入对应的值");
@@ -114,8 +127,21 @@ function hide(tag){
  light.style.display='none';
  fade.style.display='none';
 }
+function rm(a){
+    if (confirm("你确定删除吗？")){
+        document.getElementById("t").getElementsByTagName("tbody")[0].removeChild(a.parentNode.parentNode);
+       // alert();
+    }
+
+}
 
 
+function re(a){
+   // document.getElementById("push").setAttribute("id","re");
+    isre=a.parentNode.parentNode;
+    t1.click();
+
+}
 var arrayObj = [];
 function liclick(a){
 

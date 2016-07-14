@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 /**
  * Created by lixuecheng on 2016/7/12.
  */
-@WebServlet(name = "Servlet1", urlPatterns = {"/1"})
+@WebServlet(name = "Servlet1", urlPatterns = {"/1.lx"})
 public class Servlet1 extends HttpServlet {
 
     private static final int NAME_CODE_RIGHT = 0; //

@@ -180,7 +180,7 @@ input#ck1{
 width:10%;
 top:5px;
 }
-#push{
+.pr{
 	position: relative;
     color: rgba(255,255,255,1);
     text-decoration: none;
@@ -207,7 +207,7 @@ top:5px;
 	transition: all .1s ease;
 }
 
-#push:active {
+.pr:active {
     -webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
     -moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
     box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
