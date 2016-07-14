@@ -1,0 +1,64 @@
+page: {
+	name: baidu_page,
+	element: {button: {
+		type: id,
+		value: su,
+		name: 百度一下,
+		switch：{
+			iswindow: no,
+			type: title,
+			value: (\w+)_百度搜索
+		}
+	},
+	input: {
+		type: id,
+		value: kw,
+		name: 搜索输入框
+	},
+	chioce: {
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	},
+	select: {
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	},upload:{
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	}}
+},
+page: {
+	name: baidu_page,
+	element: {button: {
+		type: id,
+		value: su,
+		name: 百度一下,
+		switch：{
+			iswindow: yes,
+			type: title,
+			value: (\w+)_百度搜索
+		}
+	},
+	input: {
+		type: id,
+		value: kw,
+		name: 搜索输入框
+	},
+	chioce: {
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	},
+	select: {
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	},upload:{
+		type: id,
+		value: 1231,
+		name: 选择xxx
+	}}
+}

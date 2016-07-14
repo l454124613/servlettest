@@ -116,7 +116,7 @@ function hide(tag){
 }
 
 
-var arrayObj = new Array();
+var arrayObj = [];
 function liclick(a){
 
 //linode=a.id;
@@ -161,7 +161,7 @@ if(this.innerHTML=="+"){
 var d= c.getElementsByTagName("ul");
 var e=d[0].innerHTML;
 var timestamp=new Date().getTime();
-d[0].innerHTML=e+"<li onclick=liclick(this) id=\""+timestamp+"\">new page</li>"
+d[0].innerHTML=e+"<li onclick=liclick(this) id=\""+timestamp+"\">new page</li>";
 //alert(d[0].innerHTML);
 }
 if(this.innerHTML=="-"){
@@ -172,7 +172,7 @@ alert("未选中，请查看");}else{
  if (confirm("你确定删除吗？")) {
 for(j=0;j<arrayObj.length;j++){
 d[0].removeChild(document.getElementById(arrayObj[j]));}
-arrayObj=new Array();
+arrayObj=[];
         }
 }
 
