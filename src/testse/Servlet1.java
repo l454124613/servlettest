@@ -1,5 +1,9 @@
 package testse;
 
+
+
+import pageson.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,9 +45,19 @@ public class Servlet1 extends HttpServlet {
        // System.out.println("get");
         response.setContentType("text/json; charset=UTF-8");
         String name = request.getParameter("name");
-        String code = request.getParameter("code");
-        String jsonStr = "{\"name\":\"fly\",\"type\":\"虫子\"}";
+        String pid = request.getParameter("pid");
+        String method = request.getParameter("method");
+        String type = request.getParameter("type");
+      //  String jsonStr = "{\"name\":\"fly\",\"type\":\"虫子\"}";
         PrintWriter out = response.getWriter();
+
+        pageson p=new pageson();
+        p.setName(name);
+        System.out.println(pid);
+        System.out.println(method);
+        System.out.println(type);
+
+       // System.out.println("11");
 //        out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 //        out.println("<HTML>");
 //        out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
@@ -51,8 +65,9 @@ public class Servlet1 extends HttpServlet {
 //        out.print("    This is ");
 //        out.print(this.getClass());
 //        out.print(code);
-//        out.print(name);
-out.print(jsonStr);
+      out.print(tjson2.aa(p));
+      //  out.
+
         //out.print("nihao");
 //        out.println(", using the GET method");
 //        out.println("  </BODY>");

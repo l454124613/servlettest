@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax学习</title>
+    <script language="javascript" type="text/javascript">
+        var xmlhttp;
+        function timedGetText( url ,aa){
+            xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange=aa;
+            xmlhttp.open("GET",url,true);
+            xmlhttp.send();
+
+        }
+        function  aa(url){
+            timedGetText(url,function()
+            {
+                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                {
+
+                    alert( xmlhttp.responseText);
+                }else{
+                    alert("1213");
+                }
+            });
+            // while(!c){}
+
+
+        }
+
+
+
+
+
+    </script>
+</head>
+<body>
+<h1>学习js</h1>
+<button onClick='aa("http://localhost:8/webtest/1.lx")'>click me</button>
+</body>
+</html>

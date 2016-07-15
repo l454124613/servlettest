@@ -1,6 +1,7 @@
 var b=document.getElementsByClassName("no3");
 var t1=document.getElementById("t1");
 var isre=null;
+var xmlhttp;
 t1.addEventListener("click",function(){
 show('light');
 
@@ -114,7 +115,14 @@ alert("double");
 
 });
 }*/
+function httpget( url ,aa){
+    xmlhttp = new XMLHttpRequest();
 
+    xmlhttp.onreadystatechange=aa;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send();
+
+}
 function show(tag){
  var light=document.getElementById(tag);
  var fade=document.getElementById('fade');
@@ -187,6 +195,8 @@ if(this.innerHTML=="+"){
 var d= c.getElementsByTagName("ul");
 var e=d[0].innerHTML;
 var timestamp=new Date().getTime();
+    var gets="../1.lx?name=new page&"+"pid="+timestamp+"&method=add&"+"type=page";
+    httpget(gets,null);
 d[0].innerHTML=e+"<li onclick=liclick(this) id=\""+timestamp+"\">new page</li>";
 //alert(d[0].innerHTML);
 }
@@ -196,7 +206,11 @@ var d= c.getElementsByTagName("ul");
 if(arrayObj.length==0){
 alert("未选中，请查看");}else{
  if (confirm("你确定删除吗？")) {
+     var gets="../1.lx?"+"&method=minus&"+"type=page"+"&pid=";
+
+     httpget(gets+arrayObj,null);
 for(j=0;j<arrayObj.length;j++){
+
 d[0].removeChild(document.getElementById(arrayObj[j]));}
 arrayObj=[];
         }
@@ -214,6 +228,9 @@ alert("未选中，请查看");
  if(arrayObj.length==1){
   var name = prompt("请重命名", "");
    if(name!=null && name!=""){
+       var gets="../1.lx?"+"&method=re&"+"type=page"+"&pid=";
+
+       httpget(gets+arrayObj+"&name="+name,null);
 document.getElementById(arrayObj[0]).innerHTML=name;
 document.getElementById(arrayObj[0]).click();
 }
