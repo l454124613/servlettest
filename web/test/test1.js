@@ -72,19 +72,19 @@ sw.addEventListener("click", function () {
     }
 
 });
-
+var s1 = document.getElementById("s1");
+var in1 = document.getElementById("input1");
+var s2 = document.getElementById("s2");
+var s3 = document.getElementById("s3");
+var s4 = document.getElementById("s4");
+var s6 = document.getElementById("s6");
+var in2 = document.getElementById("input2");
+var in3= document.getElementById("input3");
+var s5 = document.getElementById("s5");
+var in4= document.getElementById("input4");
 var add = document.getElementById("push");
 add.addEventListener("click", function () {
-    var s1 = document.getElementById("s1");
-    var in1 = document.getElementById("input1");
-    var s2 = document.getElementById("s2");
-    var s3 = document.getElementById("s3");
-    var s4 = document.getElementById("s4");
-    var s6 = document.getElementById("s6");
-    var in2 = document.getElementById("input2");
-    var in3= document.getElementById("input3");
-    var s5 = document.getElementById("s5");
-    var in4= document.getElementById("input4");
+
     var sw2 = "yes";
     var s11 = "";
     var s21 = "";
@@ -115,17 +115,36 @@ s21=swbutton(s2.value);
     if (in1.value != null && in1.value != "" && in2.value != null && in2.value != "" && s21 != "" && s11 != "") {
         if (isre != null) {
 
+            var gets = "../1.lx?" + "&method=re2&" + "type=element" + "&pid=" + isre.id+"&name=s1:"+s1.value+",s2:"+s2.value+",s3:"+s3.value+",s4:"+s4.value+",s5:"+s5.value+",s6:"+s6.value+",in1:"+in1.value+",in2:"+in2.value+",in3:"+in3.value+",in4:"+in4.value+",sw:"+sw2;
+            document.getElementById("loading").style.display = "block";
+            httpget(gets, function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("loading").style.display = "none";
+                    var obj = JSON.parse(xmlhttp.responseText);
+
+                    if (obj.isok == true) {
+                        isre.innerHTML = "<td width=\"50px\" nowrap>" + s21 + "</td><td width=\"100px\" nowrap>" + s11 + "</td><td nowrap>" + in1.value + "</td><td nowrap>" + in2.value + "</td><td width=\"50px\" nowrap>" + sw2 + "</td><td width=\"100px\" nowrap><button onclick='re(this)'>R</button><button onclick='rm(this)'>X</button></td>";
+                        isre = null;
+                        s1.value = "1";
+                        s2.value = "1";
+                        in1.value = null;
+                        in2.value = null;
+                        in3.value = null;
+                        in4.value = null;
+                        if(sw.checked){ sw.click();}
+
+                        //   console.log("");
+                    } else {
+                        alert("插入错误，请查明原因");
+
+                    }
+                }
 
 
-            isre.innerHTML = "<td width=\"50px\" nowrap>" + s21 + "</td><td width=\"100px\" nowrap>" + s11 + "</td><td nowrap>" + in1.value + "</td><td nowrap>" + in2.value + "</td><td width=\"50px\" nowrap>" + sw2 + "</td><td width=\"100px\" nowrap><button onclick='re(this)'>R</button><button onclick='rm(this)'>X</button></td>";
-            isre = null;
-            s1.value = "1";
-            s2.value = "1";
-            in1.value = null;
-            in2.value = null;
-            in3.value = null;
-            in4.value = null;
-            if(sw.checked){ sw.click();}
+            });
+
+
+
         } else {
 
             var t = document.getElementById("t").getElementsByTagName("tbody")[0].innerHTML;
@@ -202,7 +221,31 @@ function hide(tag) {
 }
 function rm(a) {
     if (confirm("你确定删除吗？")) {
-        document.getElementById("t").getElementsByTagName("tbody")[0].removeChild(a.parentNode.parentNode);
+        var aa=a.parentNode.parentNode;
+        document.getElementById("loading").style.display = "block";
+        var gets = "../1.lx?" + "&method=minus&" + "type=element" + "&pid=";
+        httpget(gets + aa.id, function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("loading").style.display = "none";
+                var obj = JSON.parse(xmlhttp.responseText);
+
+                if (obj.isok == true) {
+
+                    document.getElementById("t").getElementsByTagName("tbody")[0].removeChild(aa);
+
+                    //  console.log(n1);
+
+
+                    // console.log("");
+                } else {
+
+                    alert("删除错误，请查明原因");
+                }
+            }
+
+
+        });
+
         // alert();
     }
 
@@ -212,6 +255,54 @@ function rm(a) {
 function re(a) {
     // document.getElementById("push").setAttribute("id","re");
     isre = a.parentNode.parentNode;
+
+    document.getElementById("loading").style.display = "block";
+    var gets = "../1.lx?" + "&method=re&" + "type=element" + "&pid=";
+    httpget(gets + isre.id, function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("loading").style.display = "none";
+            var obj = JSON.parse(xmlhttp.responseText);
+
+            if (obj.isok == true) {
+                var n1=obj.node;
+                s1.value=n1.type;
+                s2.value=n1.button;
+                in1.value=n1.value;
+                in2.value=n1.buttonvalue;
+                if(n1.isswitch=="yes"){
+                    sw.click();
+                    s3.value=n1.fw;
+                    s4.value=n1.stype1;
+                    s5.value=n1.fwn;
+                    s6.value=n1.stype2;
+                    in3.value=n1.svalue1;
+                    in4.value=n1.svalue2;
+                }else{
+                    if(sw.checked){
+                        sw.click();
+                        s3.value=1;
+                        s4.value=9;
+                        s5.value=0;
+                        s6.value=9;
+                        in3.value="";
+                        in4.value="";
+                    }
+                }
+
+                t1.click();
+
+                //  console.log(n1);
+
+
+                // console.log("");
+            } else {
+
+                alert("修改错误，请查明原因");
+            }
+        }
+
+
+    });
     t1.click();
 
 }

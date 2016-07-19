@@ -51,7 +51,8 @@ public class elementdb {
             }
 
         }else{return null;}
-        String sql="select "+a1.substring(1)+"from element where isused=0 and eid="+eid;
+        String sql="select "+a1.substring(1)+" from element where isused=0 and eid="+eid;
+       // System.out.println(sql);
         return DataBase.select(sql,2).get(0);
     }
     public  static List<Map<String, Object>> seelementall(String pid,String...a) throws Exception {

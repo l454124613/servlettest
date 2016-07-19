@@ -92,7 +92,7 @@ sql="update page set  "+a1.substring(1)+" where pid in ( "+pid+")";
             }
 
         }else{return null;}
-        String sql="select "+a1.substring(1)+"from page where isused=0 and pid="+pid;
+        String sql="select "+a1.substring(1)+" from page where isused=0 and pid="+pid;
         return DataBase.select(sql,2).get(0);
 
     }

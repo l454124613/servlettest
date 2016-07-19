@@ -9,6 +9,7 @@ import tools.DataBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by lixuecheng on 2016/7/18.
@@ -34,7 +35,7 @@ public class s1done {
                 root.put("isok", i>0);
                 return root;
             }else if (method.equalsIgnoreCase("re")){
-                System.out.println(name);
+              //  System.out.println(name);
                 int i=  pagedb.uppage(pid,"name='"+name+"'");
                 root.put("isok", i>0);
                 return root;
@@ -91,6 +92,37 @@ public class s1done {
                int i= elementdb.inelement(pid,name);
                 root.put("isok", i>0);
                 return root;
+            } if (method.equalsIgnoreCase("minus")){
+                int i=elementdb.upelement(pid,"isused=1");
+                root.put("isok",i==1);
+                return root;
+            } if (method.equalsIgnoreCase("re")){
+                Map<String, Object> m=  elementdb.seelement(pid,"button,type,value,buttonvalue,isswitch,fw,stype1,svalue1,fwn,stype2,svalue2");
+                ObjectNode o2=factory.objectNode();
+                root.put("isok",m.size()>0);
+                for(Map.Entry<String, Object> entry:m.entrySet()){
+                    o2.put(entry.getKey(),String.valueOf(entry.getValue()));
+
+                }
+                root.put("node",o2);
+                return root;
+            } if (method.equalsIgnoreCase("re2")){
+                //TODO
+                String n2="";
+                String[] n1=name.replace("，",",").split(",");
+                for (String a:n1
+                        ) {
+                    //   System.out.println(a);
+                    try {
+                        n2=n2+",'" + a.split(":")[0]+"'='" + a.split(":")[1]+"'";
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                       // n2=n2+",'" +""+"'";
+                    }
+                }
+
+                int i=    elementdb.upelement(pid,n2);
+                root.put("isok",i==1);
+                return  root;
             }
         }
 
