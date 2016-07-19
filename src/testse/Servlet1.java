@@ -1,7 +1,10 @@
 package testse;
 
 
-
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import pageson.*;
 
 import javax.servlet.ServletException;
@@ -21,9 +24,10 @@ public class Servlet1 extends HttpServlet {
     private static final int NAME_CODE_RIGHT = 0; //
     private static final int CODE_WRONG = 1;     //
     private static final int NAME_WRONG = 2;     //
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      //  System.out.println(request);
-        if(request == null){
+        //  System.out.println(request);
+        if (request == null) {
             return;
         }
 
@@ -42,49 +46,43 @@ public class Servlet1 extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       // System.out.println("get");
+        // System.out.println("get");
         response.setContentType("text/json; charset=UTF-8");
         String name = request.getParameter("name");
         String pid = request.getParameter("pid");
         String method = request.getParameter("method");
         String type = request.getParameter("type");
-      //  String jsonStr = "{\"name\":\"fly\",\"type\":\"虫子\"}";
+        //  String jsonStr = "{\"name\":\"fly\",\"type\":\"虫子\"}";
+        ObjectNode o=null;
+        try {
+
+        o = s1done.s1(type, method, name, pid, getServletContext().getRealPath("/WEB-INF/"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
         PrintWriter out = response.getWriter();
 
-        pageson p=new pageson();
-        p.setName(name);
-        System.out.println(pid);
-        System.out.println(method);
-        System.out.println(type);
+        //   pageson p=new pageson();
+        //   p.setName(name);
 
-       // System.out.println("11");
-//        out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
-//        out.println("<HTML>");
-//        out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
-//        out.println("  <BODY>");
-//        out.print("    This is ");
-//        out.print(this.getClass());
-//        out.print(code);
-      out.print(tjson2.aa(p));
-      //  out.
 
-        //out.print("nihao");
-//        out.println(", using the GET method");
-//        out.println("  </BODY>");
-//        out.println("</HTML>");
+        //    out.print(tjson2.aa(p));
+        out.print(mapper.writeValueAsString(o));
         out.flush();
         out.close();
     }
 
-    private int checkSubmit(String name, String code){
+    private int checkSubmit(String name, String code) {
         int ret = -2;
-        if(name.equals("admin")){
-            if(code.equals("123")){
+        if (name.equals("admin")) {
+            if (code.equals("123")) {
                 ret = NAME_CODE_RIGHT;
-            }else{
+            } else {
                 ret = CODE_WRONG;
             }
-        }else{
+        } else {
             ret = NAME_WRONG;
         }
         return ret;

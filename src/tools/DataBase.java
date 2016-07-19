@@ -1,5 +1,6 @@
 package tools;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,11 +15,11 @@ import java.util.Map;
 public class DataBase {
 	static Connection conn = null;
 	static PreparedStatement pst = null;
-	
+	public static  String con_path="";
 
 	public DataBase() throws Exception {
 		try {
-			Properties.pro_name="data/config.properties";
+			Properties.pro_name=con_path+"data/config.properties";
 			Class.forName(Properties.readOne("sqlname"));// 指定连接类型
 
 			conn = DriverManager.getConnection(Properties.readOne("sqlurl"),
@@ -31,7 +32,8 @@ public class DataBase {
 
 	static void  init() throws Exception {
 		try {
-			Properties.pro_name="data/config.properties";
+
+			Properties.pro_name=con_path+"data/config.properties";
 			Class.forName(Properties.readOne("sqlname"));// 指定连接类型
 
 			conn = DriverManager.getConnection(Properties.readOne("sqlurl"),
@@ -42,14 +44,19 @@ public class DataBase {
 		}
 	}
 	static void  init(int i) throws Exception {
+
+
+
 		try {
-			Properties.pro_name="data/config.properties";
+			Properties.pro_name=con_path+"data/config.properties";
+		//	System.out.println(Properties.pro_name);
 			Class.forName(Properties.readOne("sqlname"+String.valueOf(i)));// 指定连接类型
 			//System.out.println("sqlname"+String.valueOf(i));
 			conn = DriverManager.getConnection(Properties.readOne("sqlurl"+String.valueOf(i)),
 					Properties.readOne("sqlusername"+String.valueOf(i)), Properties.readOne("sqluserpassword"+String.valueOf(i)));// 获取连接
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("配置不正确");
 		}
 	}
@@ -63,7 +70,13 @@ public class DataBase {
 		}
 	}
 	
-	public static  int update(String sql) {
+	public static  int update(String sql,int ...a) throws Exception {
+		if(a.length==1){
+			//	System.out.println(a[0]);
+			init(a[0]);
+		}else {
+			//	System.out.println("??");
+			init();}
 		int res = 0;
 		try {
 			pst = conn.prepareStatement(sql);// 准备执行语句
